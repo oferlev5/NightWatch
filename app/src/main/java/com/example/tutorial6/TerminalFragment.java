@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Editable;
@@ -22,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,8 +33,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.widget.TintableImageSourceView;
 import androidx.fragment.app.Fragment;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -43,6 +50,10 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLOutput;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
@@ -55,6 +66,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     private TextView receiveText;
     private TextView sendText;
+    TextView steps;
+
     private TextUtil.HexWatcher hexWatcher;
 
     private Connected connected = Connected.False;
@@ -62,6 +75,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private boolean hexEnabled = false;
     private boolean pendingNewline = false;
     private String newline = TextUtil.newline_crlf;
+    ArrayList<Double> Nnumbers;
 
     LineChart mpLineChart;
     LineDataSet lineDataSet_x;
@@ -71,7 +85,14 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     LineData data;
     Boolean flag = Boolean.FALSE;
 
-    ArrayList<ArrayList<Float>> valsBeforeSave = new ArrayList<>();
+    ArrayList<String[]> valsBeforeSave = new ArrayList<>();
+    CSVWriter csvWriter;
+
+    String selectedMoveType = "Walking";
+
+    public static String csvNameToOpen;
+
+
 
     /*
      * Lifecycle
@@ -84,6 +105,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         deviceAddress = getArguments().getString("device");
 
     }
+
 
     @Override
     public void onDestroy() {
@@ -155,6 +177,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         receiveText = view.findViewById(R.id.receive_text);                          // TextView performance decreases with number of spans
         receiveText.setTextColor(getResources().getColor(R.color.colorRecieveText)); // set as default color to reduce number of spans
         receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
+        steps = view.findViewById(R.id.textView2);
+
 
 
 
@@ -180,18 +204,18 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
 
         mpLineChart = (LineChart) view.findViewById(R.id.line_chart);
-        lineDataSet_x =  new LineDataSet(emptyDataValues(), "x");
-        lineDataSet_y =  new LineDataSet(emptyDataValues(), "y");
-        lineDataSet_y.setColor(Color.MAGENTA);
-        lineDataSet_y.setCircleColor(Color.MAGENTA);
-        lineDataSet_z =  new LineDataSet(emptyDataValues(), "z");
-        lineDataSet_z.setColor(Color.RED);
-        lineDataSet_z.setCircleColor(Color.RED);
+        lineDataSet_x =  new LineDataSet(emptyDataValues(), "N");
+//        lineDataSet_y =  new LineDataSet(emptyDataValues(), "y");
+//        lineDataSet_y.setColor(Color.MAGENTA);
+        lineDataSet_x.setCircleColor(Color.RED);
+//        lineDataSet_z =  new LineDataSet(emptyDataValues(), "z");
+//        lineDataSet_z.setColor(Color.RED);
+//        lineDataSet_z.setCircleColor(Color.RED);
 
 
         dataSets.add(lineDataSet_x);
-        dataSets.add(lineDataSet_y);
-        dataSets.add(lineDataSet_z);
+//        dataSets.add(lineDataSet_y);
+//        dataSets.add(lineDataSet_z);
         data = new LineData(dataSets);
         mpLineChart.setData(data);
         mpLineChart.invalidate();
@@ -212,6 +236,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         });
         buttonStart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Nnumbers = new ArrayList<>();
                 flag = Boolean.TRUE;
 
             }
@@ -228,6 +253,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onClick(View v) {
                 valsBeforeSave = new ArrayList<>();
                 flag = Boolean.FALSE;
+                steps.setText(String.valueOf(0));
 //                data = new LineData();
 //                mpLineChart.setData(data);
 //                mpLineChart.invalidate();
@@ -235,13 +261,101 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         });
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // Handle the selected item
+                selectedMoveType = adapterView.getItemAtPosition(i).toString();
+                // Do something with the selectedMoveType
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // Handle the case when nothing is selected
+                selectedMoveType = "not selected";
+            }
+        });
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View v) {
+                String val = editTextNameFile.getText().toString().trim();
+                if (val.isEmpty()) {
+                    editTextNameFile.setError("Please enter value");
+                    editTextNameFile.requestFocus();
+                    return;
+                }
+//                first get the text from user:
+                String numStepsString = editTextSteps.getText().toString();
+                String csvName = editTextNameFile.getText().toString();
+
+
+                try {
+                    System.out.println("csvName = " + csvName);
+//                    File file = new File("/sdcard/csv_dir/");
+//                    file.mkdirs();
+//                    String csv = "/sdcard/csv_dir/"+ csvName + ".csv";
+//                    csvWriter = new CSVWriter(new FileWriter(csv,true));
+                    File directory = new File("/sdcard/csv_dir/");
+                    if (!directory.exists()) {
+                        directory.mkdirs();
+                    }
+
+                    String csv = "/sdcard/csv_dir/" + csvName + ".csv";
+                    csvWriter = new CSVWriter(new FileWriter(csv, true));
+
+//                    create the header
+                    String[] s = {"NAME:",csvName};
+                    csvWriter.writeNext(s);
+                    LocalDateTime myDateObj = LocalDateTime.now();
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                    String formattedDate = myDateObj.format(myFormatObj);
+                    String dateStr = String.valueOf(formattedDate);
+                    s = new String[] {"EXPERIMENT TIME:", dateStr};
+                    csvWriter.writeNext(s);
+                    s = new String[] {"ACTIVITY TYPE:", selectedMoveType};
+                    csvWriter.writeNext(s);
+                    s = new String[] {"COUNT OF ACTUAL STEPS:", numStepsString};
+                    csvWriter.writeNext(s);
+                    s = new String[] {"ESTIMATED NUMBER OF STEPS:", steps.getText().toString()};
+                    csvWriter.writeNext(s);
+                    s = new String[]{};
+                    csvWriter.writeNext(s);
+
+
+                    s = new String[] {"Time[sec]", "ACC X","ACC Y","ACC Z"};
+                    csvWriter.writeNext(s);
+                    int sampleLen = valsBeforeSave.size();
+                    s = valsBeforeSave.get(0);
+                    String firstT = s[0];
+                    Float firstTime = Float.valueOf(firstT);
+                    for (int i=0; i < sampleLen ; i++){
+                        s = valsBeforeSave.get(i);
+                        Float temp = Float.parseFloat(s[0]);
+                        temp -= firstTime;
+                        temp = roundFloat(temp);
+                        s[0] = String.valueOf(temp);
+                        csvWriter.writeNext(s);
+                    }
+                    csvWriter.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
         buttonCsvShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                csvNameToOpen = sendText.getText().toString();
                 OpenLoadCSV();
 
             }
         });
+
 
         return view;
     }
@@ -349,48 +463,56 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 msg_to_save = msg.replace(TextUtil.newline_crlf, TextUtil.emptyString);
                 // check message length
                 if (msg_to_save.length() > 1){
-                // split message string by ',' char
-                String[] parts = msg_to_save.split(",");
-                // function to trim blank spaces
-                parts = clean_str(parts);
+                    // split message string by ',' char
+                    String[] parts = msg_to_save.split(",");
+                    // function to trim blank spaces
+                    parts = clean_str(parts);
+                    String tempTime = parts[3];
+                    float floatTime = roundFloat(Float.parseFloat(tempTime));
+
 
                 // saving data to csv
-                try {
+                // parse string values, in this case [0] is x  [1] is y [2] is z [3] is count (t)- next will change to time
+                    double X = Math.pow(Float.valueOf(parts[0]),2);
+                    double Y = Math.pow(Float.valueOf(parts[1]),2);
+                    double Z = Math.pow(Float.valueOf(parts[2]),2);
+                    double N = Math.sqrt(X + Y + Z);
+                    Nnumbers.add(N);
 
-                    // create new csv unless file already exists
-                    File file = new File("/sdcard/csv_dir/");
-                    file.mkdirs();
-                    String csv = "/sdcard/csv_dir/data.csv";
-                    CSVWriter csvWriter = new CSVWriter(new FileWriter(csv,true));
+                    if (! Python.isStarted()) {
+                        Python.start(new AndroidPlatform(getContext()));
+                    }
+                    Python py =  Python.getInstance();
+                    PyObject pyobj = py.getModule("test");
+                    PyObject obj = pyobj.callAttr("main", String.valueOf(Nnumbers));
+                    steps.setText(obj.toString());
 
-                    // parse string values, in this case [0] is x  [1] is y [2] is z [3] is count (t)- next will change to time
-                    String row[]= new String[]{parts[0],parts[1], parts[2],parts[3]};
-//
-//                    this saves to csv - copy later
-//                    csvWriter.writeNext(row);
-//                    csvWriter.close();
+                    String row[]= new String[]{String.valueOf(floatTime),String.valueOf(N)};
+    //              this saves to csv - copy later
+    //              csvWriter.writeNext(row);
+    //              csvWriter.close();
 
                     // add received values to line dataset for plotting the linechart
 
-                    ArrayList<Float> newEntry = new ArrayList<>();
-                    newEntry.add(Float.parseFloat(parts[0]));
-                    newEntry.add(Float.parseFloat(parts[1]));
-                    newEntry.add(Float.parseFloat(parts[2]));
-                    newEntry.add(Float.parseFloat(parts[3]));
+    //                ArrayList<Float> newEntry = new ArrayList<>();
+    //                newEntry.add(Float.parseFloat(parts[0]));
+    //                newEntry.add(Float.parseFloat(parts[1]));
+    //                newEntry.add(Float.parseFloat(parts[2]));
+    //                newEntry.add(Float.parseFloat(parts[3]));
 
-                    valsBeforeSave.add(newEntry);
+                    valsBeforeSave.add(row);
 
-                    data.addEntry(new Entry(Integer.valueOf(parts[3]),Float.parseFloat(parts[0])),0);
-                    data.addEntry(new Entry(Integer.valueOf(parts[3]),Float.parseFloat(parts[1])),1);
-                    data.addEntry(new Entry(Integer.valueOf(parts[3]),Float.parseFloat(parts[2])),2);
+                    //here we do the python and return it to steps
+                    //steps.setText(obj.toString());
+
+
+                    data.addEntry(new Entry(Float.parseFloat(parts[3]),(float) N),0);
+//                    data.addEntry(new Entry(Float.parseFloat(parts[3]),Float.parseFloat(parts[1])),1);
+//                    data.addEntry(new Entry(Float.parseFloat(parts[3]),Float.parseFloat(parts[2])),2);
                     lineDataSet_x.notifyDataSetChanged(); // let the data know a dataSet changed
                     mpLineChart.notifyDataSetChanged(); // let the chart know it's data changed
                     mpLineChart.invalidate(); // refresh
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }}
+                }
 
                 msg = msg.replace(TextUtil.newline_crlf, TextUtil.newline_lf);
                 // send msg to function that saves it to csv
@@ -454,6 +576,13 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private void OpenLoadCSV(){
         Intent intent = new Intent(getContext(),LoadCSV.class);
         startActivity(intent);
+    }
+
+    public static float roundFloat(float value) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.###");
+        String roundedValueString = decimalFormat.format(value);
+        float roundedValue = Float.parseFloat(roundedValueString);
+        return roundedValue;
     }
 
 }
