@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_rules"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.FunctionalityFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-    <Button
-        android:id="@+id/button3"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Buttonss"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="231dp" />
+        android:text="My Dashboard"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:layout_margin="12dp"
+        android:textStyle="bold"
 
 
-</FrameLayout>
+
+        />
+
+
+
+
+
+</RelativeLayout>

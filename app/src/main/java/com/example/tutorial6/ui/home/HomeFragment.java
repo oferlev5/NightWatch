@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 Fragment anotherFragment = new FunctionalityFragment();
-                fragmentTransaction.add(R.id.nav_host_fragment_content_drawer,anotherFragment);
+                fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment);
 //                fragmentTransaction.add(R.id.nav_host_fragment_content_main2, anotherFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
