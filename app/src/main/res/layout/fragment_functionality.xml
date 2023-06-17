@@ -23,6 +23,95 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
+
+    <Button
+        android:id="@+id/start_but"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="60dp"
+        android:text="Start"
+        android:textSize="20dp"
+        android:textColor="#ffff"
+        android:background="@drawable/custon_button"
+        android:layout_below="@id/textView"/>
+
+    <Button
+        android:id="@+id/end_but"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="140dp"
+        android:text="stop"
+        android:textSize="20dp"
+        android:textColor="#ffff"
+        android:background="@drawable/custon_button"
+        android:layout_below="@id/textView"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/circr_start"-->
+<!--        android:layout_width="220dp"-->
+<!--        android:layout_height="220dp"-->
+<!--        android:text="my luvkry fay"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:layout_marginStart="95dp"-->
+<!--        android:layout_below="@id/textView"-->
+<!--        android:textSize="5100dp"-->
+<!--        android:background="@drawable/circle"-->
+<!--        />-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_below="@id/textView"-->
+<!--        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--        android:layout_marginStart="110dp"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
+
+
+
+<!--        <ImageButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/ic_start"-->
+
+<!--            />-->
+
+
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_below="@id/textView"-->
+<!--        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--        android:layout_marginStart="210dp"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
+
+
+
+<!--        <ImageButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/ic_stop"-->
+
+<!--            />-->
+
+
+<!--    </LinearLayout>-->
+
+<!--    <ImageButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/textView"-->
+<!--        android:layout_marginStart="95dp"-->
+<!--        android:layout_marginTop="88dp"-->
+<!--        android:src="@drawable/ic_start" />-->
+
     <GridLayout
         android:layout_width="5000dp"
         android:layout_height="1500dp"
@@ -59,14 +148,23 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_logout" />
+                    android:src="@drawable/ic_night" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="logout"
+                    android:text="Movement"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No movement detect"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
 
 
             </LinearLayout>
@@ -75,6 +173,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -97,12 +196,18 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home" />
+                    android:src="@drawable/ic_voice" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Home"
+                    android:text="Sound"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Sound Detected"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -135,12 +240,19 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home" />
+                    android:src="@drawable/ic_light" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Home"
+                    android:text="Light"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Light exposure is good"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -173,12 +285,19 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_logout" />
+                    android:src="@drawable/ic_temp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="logout"
+                    android:text="Temprature"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="warm and cozy!"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
