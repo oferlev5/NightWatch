@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tutorial6</string>
+    <string name="app_name">NightWatch</string>
     <string name="devices">Bluetooth Devices</string>
     <string-array name="con_array">
         <item>Walking</item>
