@@ -33,7 +33,9 @@ public class DevicesFragment extends ListFragment {
         setHasOptionsMenu(true);
         if(getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
             bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        System.out.println("initialized bluetoothadapter");
         listAdapter = new ArrayAdapter<BluetoothDevice>(getActivity(), 0, listItems) {
+
             @NonNull
             @Override
             public View getView(int position, View view, @NonNull ViewGroup parent) {
@@ -43,6 +45,7 @@ public class DevicesFragment extends ListFragment {
                 TextView text1 = view.findViewById(R.id.text1);
                 TextView text2 = view.findViewById(R.id.text2);
                 text1.setText(device.getName());
+                System.out.println("the text is" +text1.getText());
                 text2.setText(device.getAddress());
                 return view;
             }
@@ -108,9 +111,12 @@ public class DevicesFragment extends ListFragment {
         BluetoothDevice device = listItems.get(position-1);
         Bundle args = new Bundle();
         args.putString("device", device.getAddress());
-        Fragment fragment = new TerminalFragment();
-        fragment.setArguments(args);
-        getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").addToBackStack(null).commit();
+        System.out.println("got here");
+        Intent intent = new Intent(getActivity(), Drawer2Activity.class);
+        startActivity(intent);
+//        Fragment fragment = new TerminalFragment();
+//        fragment.setArguments(args);
+//        getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").addToBackStack(null).commit();
     }
 
     /**
