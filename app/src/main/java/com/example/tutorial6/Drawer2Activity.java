@@ -1,5 +1,6 @@
 package com.example.tutorial6;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -29,6 +30,11 @@ public class Drawer2Activity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarDrawer.toolbar);
+
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("device");
+        System.out.println("args areeeeee = " + args);
+
         binding.appBarDrawer.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +53,16 @@ public class Drawer2Activity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_drawer);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+
+
+
+
+    public Bundle getBundledata() {
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("device");
+        return args;
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.tutorial6.Drawer2Activity;
 import com.example.tutorial6.R;
+import com.example.tutorial6.TerminalFragment;
 import com.example.tutorial6.databinding.FragmentFunctionalityBinding;
 import com.example.tutorial6.databinding.FragmentHomeBinding;
 
@@ -22,7 +26,7 @@ import com.example.tutorial6.databinding.FragmentHomeBinding;
  */
 public class FunctionalityFragment extends Fragment {
 
-    CardView cardHome;
+    Button startBtn;
     private FragmentFunctionalityBinding binding;
 
 
@@ -54,8 +58,28 @@ public class FunctionalityFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentFunctionalityBinding.inflate(inflater, container, false);
+        System.out.println("i am in activityy" + getActivity());
         View root = binding.getRoot();
-        cardHome = binding.cardHome;
+        startBtn = binding.startBut;
+
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Fragment anotherFragment = new TerminalFragment();
+                Drawer2Activity activity = (Drawer2Activity) getActivity();
+                Bundle args = activity.getBundledata();
+                System.out.println("args = " + args.toString());
+                anotherFragment.setArguments(args);
+                fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment).addToBackStack(null).commit();
+//                fragmentTransaction.add(R.id.nav_host_fragment_content_main2, anotherFragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+
+
+            }
+        });
 
         return root;
     }
