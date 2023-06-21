@@ -113,6 +113,7 @@ public class DevicesFragment extends ListFragment {
         args.putString("device", device.getAddress());
         System.out.println("got here");
         Intent intent = new Intent(getActivity(), Drawer2Activity.class);
+        intent.putExtra("device", args);
         startActivity(intent);
 //        Fragment fragment = new TerminalFragment();
 //        fragment.setArguments(args);

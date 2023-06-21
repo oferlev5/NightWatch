@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             if (savedInstanceState == null){
                 System.out.println("opening device fragment");
             getSupportFragmentManager().beginTransaction().add(R.id.fragment, new DevicesFragment(), "devices").commit();}
-        else
+//        else
             onBackStackChanged();
 
         }
