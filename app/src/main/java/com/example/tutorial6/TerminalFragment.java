@@ -77,20 +77,20 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private String newline = TextUtil.newline_crlf;
     ArrayList<Double> Nnumbers;
 
-    LineChart mpLineChart;
-    LineDataSet lineDataSet_x;
-    LineDataSet lineDataSet_y;
-    LineDataSet lineDataSet_z;
-    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-    LineData data;
+//    LineChart mpLineChart;
+//    LineDataSet lineDataSet_x;
+//    LineDataSet lineDataSet_y;
+//    LineDataSet lineDataSet_z;
+//    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+//    LineData data;
     Boolean flag = Boolean.FALSE;
-
-    ArrayList<String[]> valsBeforeSave = new ArrayList<>();
-    CSVWriter csvWriter;
-
-    String selectedMoveType = "Walking";
-
-    public static String csvNameToOpen;
+//
+//    ArrayList<String[]> valsBeforeSave = new ArrayList<>();
+//    CSVWriter csvWriter;
+//
+//    String selectedMoveType = "Walking";
+//
+//    public static String csvNameToOpen;
 
 
 
@@ -180,22 +180,22 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         receiveText = view.findViewById(R.id.receive_text);                          // TextView performance decreases with number of spans
         receiveText.setTextColor(getResources().getColor(R.color.colorRecieveText)); // set as default color to reduce number of spans
         receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
-        steps = view.findViewById(R.id.textView2);
+//        steps = view.findViewById(R.id.textView2);
 
 
 
 
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.con_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        EditText editTextSteps = view.findViewById(R.id.editTextNumber3);
-        EditText editTextNameFile = view.findViewById(R.id.editTextTextPersonName);
-        Button buttonStart = view.findViewById(R.id.button3);
-        Button buttonStop = view.findViewById(R.id.button4);
-        Button buttonReset = view.findViewById(R.id.button5);
-        Button buttonSave = view.findViewById(R.id.button6);
+//        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
+//                R.array.con_array, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        EditText editTextSteps = view.findViewById(R.id.editTextNumber3);
+//        EditText editTextNameFile = view.findViewById(R.id.editTextTextPersonName);
+//        Button buttonStart = view.findViewById(R.id.button3);
+//        Button buttonStop = view.findViewById(R.id.button4);
+//        Button buttonReset = view.findViewById(R.id.button5);
+//        Button buttonSave = view.findViewById(R.id.button6);
 
         sendText = view.findViewById(R.id.send_text);
         hexWatcher = new TextUtil.HexWatcher(sendText);
@@ -203,161 +203,161 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         sendText.addTextChangedListener(hexWatcher);
         sendText.setHint(hexEnabled ? "HEX mode" : "");
 
-        View sendBtn = view.findViewById(R.id.send_btn);
-        sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
-
-        mpLineChart = (LineChart) view.findViewById(R.id.line_chart);
-        lineDataSet_x =  new LineDataSet(emptyDataValues(), "N");
+//        View sendBtn = view.findViewById(R.id.send_btn);
+//        sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
+//
+//        mpLineChart = (LineChart) view.findViewById(R.id.line_chart);
+//        lineDataSet_x =  new LineDataSet(emptyDataValues(), "N");
 //        lineDataSet_y =  new LineDataSet(emptyDataValues(), "y");
 //        lineDataSet_y.setColor(Color.MAGENTA);
-        lineDataSet_x.setCircleColor(Color.RED);
+//        lineDataSet_x.setCircleColor(Color.RED);
 //        lineDataSet_z =  new LineDataSet(emptyDataValues(), "z");
 //        lineDataSet_z.setColor(Color.RED);
 //        lineDataSet_z.setCircleColor(Color.RED);
 
 
-        dataSets.add(lineDataSet_x);
+//        dataSets.add(lineDataSet_x);
 //        dataSets.add(lineDataSet_y);
 //        dataSets.add(lineDataSet_z);
-        data = new LineData(dataSets);
-        mpLineChart.setData(data);
-        mpLineChart.invalidate();
+//        data = new LineData(dataSets);
+//        mpLineChart.setData(data);
+//        mpLineChart.invalidate();
+//
+//        Button buttonClear = (Button) view.findViewById(R.id.button1);
+//        Button buttonCsvShow = (Button) view.findViewById(R.id.button2);
+//
+//
+//        buttonClear.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(),"Clear",Toast.LENGTH_SHORT).show();
+//                LineData data = mpLineChart.getData();
+//                ILineDataSet set = data.getDataSetByIndex(0);
+//                data.getDataSetByIndex(0);
+//                while(set.removeLast()){}
+//
+//            }
+//        });
+//        buttonStart.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Nnumbers = new ArrayList<>();
+//                flag = Boolean.TRUE;
+//
+//            }
+//        });
+//
+//        buttonStop.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                flag = Boolean.FALSE;
+//            }
+//
+//        });
+//
+//        buttonReset.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                valsBeforeSave = new ArrayList<>();
+//                flag = Boolean.FALSE;
+//                steps.setText(String.valueOf(0));
+////                data = new LineData();
+////                mpLineChart.setData(data);
+////                mpLineChart.invalidate();
+//            }
+//
+//        });
+//
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                // Handle the selected item
+//                selectedMoveType = adapterView.getItemAtPosition(i).toString();
+//                // Do something with the selectedMoveType
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                // Handle the case when nothing is selected
+//                selectedMoveType = "not selected";
+//            }
+//        });
+//
+//        buttonSave.setOnClickListener(new View.OnClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.O)
+//            public void onClick(View v) {
+//                String val = editTextNameFile.getText().toString().trim();
+//                if (val.isEmpty()) {
+//                    editTextNameFile.setError("Please enter value");
+//                    editTextNameFile.requestFocus();
+//                    return;
+//                }
+////                first get the text from user:
+//                String numStepsString = editTextSteps.getText().toString();
+//                String csvName = editTextNameFile.getText().toString();
+//
+//
+//                try {
+//                    System.out.println("csvName = " + csvName);
+////                    File file = new File("/sdcard/csv_dir/");
+////                    file.mkdirs();
+////                    String csv = "/sdcard/csv_dir/"+ csvName + ".csv";
+////                    csvWriter = new CSVWriter(new FileWriter(csv,true));
+//                    File directory = new File("/sdcard/csv_dir/");
+//                    if (!directory.exists()) {
+//                        directory.mkdirs();
+//                    }
+//
+//                    String csv = "/sdcard/csv_dir/" + csvName + ".csv";
+//                    csvWriter = new CSVWriter(new FileWriter(csv, true));
+//
+////                    create the header
+//                    String[] s = {"NAME:",csvName};
+//                    csvWriter.writeNext(s);
+//                    LocalDateTime myDateObj = LocalDateTime.now();
+//                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+//                    String formattedDate = myDateObj.format(myFormatObj);
+//                    String dateStr = String.valueOf(formattedDate);
+//                    s = new String[] {"EXPERIMENT TIME:", dateStr};
+//                    csvWriter.writeNext(s);
+//                    s = new String[] {"ACTIVITY TYPE:", selectedMoveType};
+//                    csvWriter.writeNext(s);
+//                    s = new String[] {"COUNT OF ACTUAL STEPS:", numStepsString};
+//                    csvWriter.writeNext(s);
+//                    s = new String[] {"ESTIMATED NUMBER OF STEPS:", steps.getText().toString()};
+//                    csvWriter.writeNext(s);
+//                    s = new String[]{};
+//                    csvWriter.writeNext(s);
+//
+//
+//                    s = new String[] {"Time[sec]", "ACC X","ACC Y","ACC Z"};
+//                    csvWriter.writeNext(s);
+//                    int sampleLen = valsBeforeSave.size();
+//                    s = valsBeforeSave.get(0);
+//                    String firstT = s[0];
+//                    Float firstTime = Float.valueOf(firstT);
+//                    for (int i=0; i < sampleLen ; i++){
+//                        s = valsBeforeSave.get(i);
+//                        Float temp = Float.parseFloat(s[0]);
+//                        temp -= firstTime;
+//                        temp = roundFloat(temp);
+//                        s[0] = String.valueOf(temp);
+//                        csvWriter.writeNext(s);
+//                    }
+//                    csvWriter.close();
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
 
-        Button buttonClear = (Button) view.findViewById(R.id.button1);
-        Button buttonCsvShow = (Button) view.findViewById(R.id.button2);
-
-
-        buttonClear.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Clear",Toast.LENGTH_SHORT).show();
-                LineData data = mpLineChart.getData();
-                ILineDataSet set = data.getDataSetByIndex(0);
-                data.getDataSetByIndex(0);
-                while(set.removeLast()){}
-
-            }
-        });
-        buttonStart.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Nnumbers = new ArrayList<>();
-                flag = Boolean.TRUE;
-
-            }
-        });
-
-        buttonStop.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                flag = Boolean.FALSE;
-            }
-
-        });
-
-        buttonReset.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                valsBeforeSave = new ArrayList<>();
-                flag = Boolean.FALSE;
-                steps.setText(String.valueOf(0));
-//                data = new LineData();
-//                mpLineChart.setData(data);
-//                mpLineChart.invalidate();
-            }
-
-        });
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Handle the selected item
-                selectedMoveType = adapterView.getItemAtPosition(i).toString();
-                // Do something with the selectedMoveType
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // Handle the case when nothing is selected
-                selectedMoveType = "not selected";
-            }
-        });
-
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            public void onClick(View v) {
-                String val = editTextNameFile.getText().toString().trim();
-                if (val.isEmpty()) {
-                    editTextNameFile.setError("Please enter value");
-                    editTextNameFile.requestFocus();
-                    return;
-                }
-//                first get the text from user:
-                String numStepsString = editTextSteps.getText().toString();
-                String csvName = editTextNameFile.getText().toString();
-
-
-                try {
-                    System.out.println("csvName = " + csvName);
-//                    File file = new File("/sdcard/csv_dir/");
-//                    file.mkdirs();
-//                    String csv = "/sdcard/csv_dir/"+ csvName + ".csv";
-//                    csvWriter = new CSVWriter(new FileWriter(csv,true));
-                    File directory = new File("/sdcard/csv_dir/");
-                    if (!directory.exists()) {
-                        directory.mkdirs();
-                    }
-
-                    String csv = "/sdcard/csv_dir/" + csvName + ".csv";
-                    csvWriter = new CSVWriter(new FileWriter(csv, true));
-
-//                    create the header
-                    String[] s = {"NAME:",csvName};
-                    csvWriter.writeNext(s);
-                    LocalDateTime myDateObj = LocalDateTime.now();
-                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-                    String formattedDate = myDateObj.format(myFormatObj);
-                    String dateStr = String.valueOf(formattedDate);
-                    s = new String[] {"EXPERIMENT TIME:", dateStr};
-                    csvWriter.writeNext(s);
-                    s = new String[] {"ACTIVITY TYPE:", selectedMoveType};
-                    csvWriter.writeNext(s);
-                    s = new String[] {"COUNT OF ACTUAL STEPS:", numStepsString};
-                    csvWriter.writeNext(s);
-                    s = new String[] {"ESTIMATED NUMBER OF STEPS:", steps.getText().toString()};
-                    csvWriter.writeNext(s);
-                    s = new String[]{};
-                    csvWriter.writeNext(s);
-
-
-                    s = new String[] {"Time[sec]", "ACC X","ACC Y","ACC Z"};
-                    csvWriter.writeNext(s);
-                    int sampleLen = valsBeforeSave.size();
-                    s = valsBeforeSave.get(0);
-                    String firstT = s[0];
-                    Float firstTime = Float.valueOf(firstT);
-                    for (int i=0; i < sampleLen ; i++){
-                        s = valsBeforeSave.get(i);
-                        Float temp = Float.parseFloat(s[0]);
-                        temp -= firstTime;
-                        temp = roundFloat(temp);
-                        s[0] = String.valueOf(temp);
-                        csvWriter.writeNext(s);
-                    }
-                    csvWriter.close();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        buttonCsvShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                csvNameToOpen = sendText.getText().toString();
-                OpenLoadCSV();
-
-            }
-        });
+//        buttonCsvShow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                csvNameToOpen = sendText.getText().toString();
+//                OpenLoadCSV();
+//
+//            }
+//        });
 
 
         return view;
@@ -477,21 +477,21 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
                 // saving data to csv
                 // parse string values, in this case [0] is x  [1] is y [2] is z [3] is count (t)- next will change to time
-                    double X = Math.pow(Float.valueOf(parts[0]),2);
-                    double Y = Math.pow(Float.valueOf(parts[1]),2);
-                    double Z = Math.pow(Float.valueOf(parts[2]),2);
-                    double N = Math.sqrt(X + Y + Z);
-                    Nnumbers.add(N);
-
-                    if (! Python.isStarted()) {
-                        Python.start(new AndroidPlatform(getContext()));
-                    }
-                    Python py =  Python.getInstance();
-                    PyObject pyobj = py.getModule("test");
-                    PyObject obj = pyobj.callAttr("main", String.valueOf(Nnumbers));
-                    steps.setText(obj.toString());
-
-                    String row[]= new String[]{String.valueOf(floatTime),String.valueOf(N)};
+//                    double X = Math.pow(Float.valueOf(parts[0]),2);
+//                    double Y = Math.pow(Float.valueOf(parts[1]),2);
+//                    double Z = Math.pow(Float.valueOf(parts[2]),2);
+//                    double N = Math.sqrt(X + Y + Z);
+//                    Nnumbers.add(N);
+//
+//                    if (! Python.isStarted()) {
+//                        Python.start(new AndroidPlatform(getContext()));
+//                    }
+//                    Python py =  Python.getInstance();
+//                    PyObject pyobj = py.getModule("test");
+//                    PyObject obj = pyobj.callAttr("main", String.valueOf(Nnumbers));
+//                    steps.setText(obj.toString());
+//
+//                    String row[]= new String[]{String.valueOf(floatTime),String.valueOf(N)};
     //              this saves to csv - copy later
     //              csvWriter.writeNext(row);
     //              csvWriter.close();
@@ -504,18 +504,18 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     //                newEntry.add(Float.parseFloat(parts[2]));
     //                newEntry.add(Float.parseFloat(parts[3]));
 
-                    valsBeforeSave.add(row);
-
-                    //here we do the python and return it to steps
-                    //steps.setText(obj.toString());
-
-
-                    data.addEntry(new Entry(Float.parseFloat(parts[3]),(float) N),0);
-//                    data.addEntry(new Entry(Float.parseFloat(parts[3]),Float.parseFloat(parts[1])),1);
-//                    data.addEntry(new Entry(Float.parseFloat(parts[3]),Float.parseFloat(parts[2])),2);
-                    lineDataSet_x.notifyDataSetChanged(); // let the data know a dataSet changed
-                    mpLineChart.notifyDataSetChanged(); // let the chart know it's data changed
-                    mpLineChart.invalidate(); // refresh
+//                    valsBeforeSave.add(row);
+//
+//                    //here we do the python and return it to steps
+//                    //steps.setText(obj.toString());
+//
+//
+//                    data.addEntry(new Entry(Float.parseFloat(parts[3]),(float) N),0);
+////                    data.addEntry(new Entry(Float.parseFloat(parts[3]),Float.parseFloat(parts[1])),1);
+////                    data.addEntry(new Entry(Float.parseFloat(parts[3]),Float.parseFloat(parts[2])),2);
+//                    lineDataSet_x.notifyDataSetChanged(); // let the data know a dataSet changed
+//                    mpLineChart.notifyDataSetChanged(); // let the chart know it's data changed
+//                    mpLineChart.invalidate(); // refresh
                 }
 
                 msg = msg.replace(TextUtil.newline_crlf, TextUtil.newline_lf);
