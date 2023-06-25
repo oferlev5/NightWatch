@@ -1,22 +1,25 @@
 package com.example.tutorial6.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+
 import com.example.tutorial6.R;
 import com.example.tutorial6.databinding.FragmentHomeBinding;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
@@ -31,6 +34,16 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         ImageButton buttonstart =binding.imageButton;
+
+        DBOperations op = new DBOperations();
+//        HashMap<String,String> note = new HashMap<>();
+//        note.put("name","tamar");
+//        note.put("password", "rtf456");
+//        op.insertUsernameData(note);
+
+        op.getAllUserReferences("tamar");
+
+
 
 
         buttonstart.setOnClickListener(new View.OnClickListener() {

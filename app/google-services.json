@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "800421373734",
+    "project_id": "nightwatch-35e77",
+    "storage_bucket": "nightwatch-35e77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800421373734:android:446a780aa9770e1e0983e7",
+        "android_client_info": {
+          "package_name": "com.example.tutorial6"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800421373734-0j54i6qb4tot9dn2fvk3j88rljlee8mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzfdIuqK9yxaoyHLpi910MjjMeVxpjgLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800421373734-0j54i6qb4tot9dn2fvk3j88rljlee8mb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
