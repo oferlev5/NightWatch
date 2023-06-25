@@ -40,6 +40,7 @@ public class DevicesFragment extends ListFragment {
             @Override
             public View getView(int position, View view, @NonNull ViewGroup parent) {
                 BluetoothDevice device = listItems.get(position);
+                ///important
                 if (view == null)
                     view = getActivity().getLayoutInflater().inflate(R.layout.device_list_item, parent, false);
                 TextView text1 = view.findViewById(R.id.text1);
@@ -111,7 +112,7 @@ public class DevicesFragment extends ListFragment {
         BluetoothDevice device = listItems.get(position-1);
         Bundle args = new Bundle();
         args.putString("device", device.getAddress());
-        System.out.println("got here");
+        System.out.println("got here" + device.getAddress());
         Intent intent = new Intent(getActivity(), Drawer2Activity.class);
         intent.putExtra("device", args);
         startActivity(intent);
