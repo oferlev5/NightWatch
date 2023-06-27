@@ -22,13 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
-
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
+        System.out.println("idan - in homefragment");
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -40,24 +40,33 @@ public class HomeFragment extends Fragment {
 //        note.put("name","tamar");
 //        note.put("password", "rtf456");
 //        op.insertUsernameData(note);
-
+        /**
+         * idan:
+         * moved all the functionality from the button outside so it jumps to functionality fragment
+         */
         op.getAllUserReferences("tamar");
-
-
-
-
-        buttonstart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment anotherFragment = new FunctionalityFragment();
-                fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment anotherFragment = new FunctionalityFragment();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment);
 //                fragmentTransaction.add(R.id.nav_host_fragment_content_main2, anotherFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+
+//
+//        buttonstart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentManager fragmentManager = getFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                Fragment anotherFragment = new FunctionalityFragment();
+//                fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment);
+////                fragmentTransaction.add(R.id.nav_host_fragment_content_main2, anotherFragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//            }
+//        });
 
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
