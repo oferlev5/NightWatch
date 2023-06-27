@@ -1,9 +1,12 @@
 package com.example.tutorial6.ui.home;
 
+
+import com.example.tutorial6.CredentialCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -17,14 +20,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+
+import io.grpc.internal.DnsNameResolver;
 
 public class DBOperations {
+    public HashMap<String,String> helper;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();;
 
-
-
-    void insertUsernameData(HashMap<String,String> dataToEnter) {
+    public void insertUsernameData(HashMap<String,String> dataToEnter) {
         db.collection("users")
                 .add(dataToEnter)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -43,7 +48,7 @@ public class DBOperations {
 
     }
     
-    void readData() {
+    public void readData() {
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -62,37 +67,39 @@ public class DBOperations {
         
     }
 
-     void getAllUserReferences(String username) {
-        CollectionReference referencesCollection = db.collection("users");
-
-        referencesCollection.whereEqualTo("name", username).whereEqualTo("password","12345")
+    public void getDocumentsByEmailAndPassword(String email, String password, final FirestoreCallback callback) {
+        db.collection("users")
+                .whereEqualTo("email", email)
+                .whereEqualTo("password", password)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<DocumentSnapshot> documents = task.getResult().getDocuments();
-                            List<String> referenceIds = new ArrayList<>();
-
-                            for (DocumentSnapshot document : documents) {
-                                referenceIds.add(document.getId());
-                                System.out.println("document = " + document);
-
-                                System.out.println(document.getString("name"));
-                                System.out.println(document.getString("password"));
+                            HashMap<String, Object> documents = new HashMap<>();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                documents.put(document.getId(), document.getData());
                             }
-
-                            // Process the reference IDs as needed
-                            for (String referenceId : referenceIds) {
-                                System.out.println("succreferenceId = " + referenceId);
-                            }
+                            callback.onSuccess(documents);
                         } else {
-                            System.out.println("error = " + task);
+                            Exception exception = task.getException();
+
                         }
                     }
                 });
     }
+
+    public interface FirestoreCallback {
+        void onSuccess(HashMap<String, Object> documents);
+
+    }
 }
+
+
+
+
+
+
 
 
 

@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
 //        note.put("password", "rtf456");
 //        op.insertUsernameData(note);
 
-        op.getAllUserReferences("tamar");
+//        op.getAllUserReferences("tamar");
 
 
 

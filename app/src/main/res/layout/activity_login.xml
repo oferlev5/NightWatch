@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/signup"
+    android:background="@drawable/login"
     tools:context=".SignupActivity">
 
     <LinearLayout
@@ -23,12 +23,11 @@
 
 
             <EditText
-                android:id="@+id/signup_email"
+                android:id="@+id/login_email"
                 android:layout_width="350dp"
                 android:textColor="@color/black"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-
                 android:background="@drawable/purple_border"
                 android:drawableLeft="@drawable/ic_baseline_email_24"
                 android:drawablePadding="8dp"
@@ -37,7 +36,7 @@
 
 
             <EditText
-                android:id="@+id/signup_password"
+                android:id="@+id/login_password"
                 android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
@@ -49,42 +48,31 @@
                 android:inputType="textPassword"
                 android:padding="8dp" />
 
-            <EditText
-                android:id="@+id/signup_confirm"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:textColor="@color/black"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/purple_border"
-                android:drawableLeft="@drawable/ic_baseline_password_24"
-                android:drawablePadding="8dp"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:padding="8dp" />
+
 
 
             <Button
-                android:id="@+id/signup_but"
+                android:id="@+id/login_but"
                 android:layout_width="350dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/custon_button"
-                android:text="Sign Up"
+                android:text="Login"
                 android:textSize="18sp"
                 app:cornerRadius="30dp"
 
                 />
 
             <TextView
-                android:id="@+id/login_redirected"
+                android:id="@+id/signup_redirected"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:padding="8dp"
-                android:text="Already an user? Login"
+                android:text="Not yet registered? Sign up"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
 
         </LinearLayout>
