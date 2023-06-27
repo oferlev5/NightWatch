@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+//import org.checkerframework.checker.nullness.qual.NonNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -29,6 +31,8 @@ public class DevicesFragment extends ListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        System.out.println("idan - in devicefrag");
+
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if(getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))

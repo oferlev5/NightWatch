@@ -39,13 +39,13 @@
         android:id="@+id/end_but"
         android:layout_width="250dp"
         android:layout_height="60dp"
+        android:layout_below="@id/textView"
         android:layout_marginStart="80dp"
         android:layout_marginTop="140dp"
-        android:text="stop"
-        android:textSize="20dp"
-        android:textColor="#ffff"
         android:background="@drawable/custon_button"
-        android:layout_below="@id/textView"/>
+        android:text="stop"
+        android:textColor="#ffff"
+        android:textSize="20dp" />
 
 
 
@@ -110,7 +110,6 @@
             android:id="@+id/movement_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shit fuck"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -154,11 +153,11 @@
                     android:text="Sound"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/sound_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Sound Detected"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -205,7 +204,6 @@
                     android:id="@+id/light_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Light exposure is good"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -252,7 +250,6 @@
                     android:id="@+id/temp_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="warm and cozy!"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
