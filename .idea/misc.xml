@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/erans/Desktop/IOT/project2/NightWatch/app/src/main/res/drawable/ic_home.xml" value="0.2265" />
+        <entry key="..\:/Users/erans/Desktop/IOT/project2/NightWatch/app/src/main/res/drawable/ic_temp.xml" value="0.2265" />
+        <entry key="..\:/Users/erans/Desktop/IOT/project2/NightWatch/app/src/main/res/layout/fragment_functionality.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/erans/Desktop/IOT/project2/NightWatch/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/erans/Desktop/IOT/project2/NightWatch/app/src/main/res/layout/fragment_terminal.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/drawable/background_rules.xml" value="0.112" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/drawable/circle.xml" value="0.112" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/drawable/custon_button.xml" value="0.112" />
@@ -15,23 +20,20 @@
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/activity_drawer.xml" value="0.1" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/activity_load_csv.xml" value="0.1" />
+        <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/activity_login.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/activity_signup.xml" value="0.22" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/activity_splash_screen.xml" value="0.3953125" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/app_bar_drawer.xml" value="0.1" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/content_drawer.xml" value="0.1" />
-        <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/content_splash_screen.xml" value="0.3953125" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/device_list_header.xml" value="0.22" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/device_list_item.xml" value="0.3880208333333333" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/fragment_functionality.xml" value="0.22" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/fragment_home.xml" value="0.22" />
-        <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/fragment_second.xml" value="0.3953125" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/fragment_terminal.xml" value="0.22" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/layout/nav_header_drawer.xml" value="0.1" />
-        <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/mipmap-anydpi-v26/Logo_launcher.xml" value="0.1" />
-        <entry key="..\:/Users/oferl/AndroidStudioProjects/Nightwatch/Tutorial6 - before changes/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Tutorial6_7/Tutorial6 - before changes/app/src/main/res/layout/activity_load_csv.xml" value="0.22" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Tutorial6_7/Tutorial6 - before changes/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/oferl/AndroidStudioProjects/Tutorial6_7/Tutorial6 - before changes/app/src/main/res/layout/fragment_terminal.xml" value="0.22" />

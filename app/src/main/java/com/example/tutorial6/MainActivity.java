@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("idan - in mainactivity");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
