@@ -41,8 +41,11 @@ import java.util.ArrayList;
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
     public static final int ARRAY_LEN = 50;
     public static final double MOVING_THRESHOLD = 13;
-    public static final double LIGHT_THRESHOLD = 0.05;
-    public static final int SOUND_THRESHOLD = 790;
+    public static final double LIGHT_THRESHOLD = 0.00;
+    public static final int SOUND_THRESHOLD = 770;
+
+    private Boolean firstFlag = Boolean.TRUE;
+    float firstTime;
 
     private enum Connected { False, Pending, True }
 
@@ -70,6 +73,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     TextView soundText;
     TextView tempText;
     TextView movementText;
+    TextView timeText;
     /*
      * Lifecycle
      */
@@ -167,6 +171,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         this.tempText = view.findViewById(R.id.temp_txt);
         this.soundText = view.findViewById(R.id.sound_txt);
         this.movementText = view.findViewById(R.id.movement_txt);
+        this.timeText = view.findViewById(R.id.time_txt);
 
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,9 +284,15 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     private void receive(byte[] message) {
         ArrayList<Float> parsedData = parseData(message);
+        if (this.firstFlag){
+            this.firstTime = parsedData.get(3);
+            this.firstFlag = Boolean.FALSE;
+        }
         if (parsedData.size() < 6){
             return;
         }
+        updateTime(parsedData);
+
         saveDataToArrays(parsedData);
 
         /** check if the params status changed */
@@ -300,7 +311,16 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         if (isNoise) this.soundText.setText("CRYING");
         else this.soundText.setText("");
-        this.tempText.setText(String.valueOf(temp));
+
+        this.tempText.setText(String.valueOf((int) temp));
+    }
+
+    private void updateTime(ArrayList<Float> parsedData) {
+        float time = parsedData.get(3) - this.firstTime;
+        int timeInt = (int) time;
+        String timeString = String.valueOf(timeInt);
+        this.timeText.setText("time: " + timeString);
+
     }
 
     private Boolean checkIfMoving() {
