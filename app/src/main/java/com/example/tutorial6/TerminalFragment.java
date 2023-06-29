@@ -279,6 +279,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     private void receive(byte[] message) {
         ArrayList<Float> parsedData = parseData(message);
+        if (parsedData.size() < 6){
+            return;
+        }
         saveDataToArrays(parsedData);
 
         /** check if the params status changed */
