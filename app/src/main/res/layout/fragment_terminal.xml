@@ -23,17 +23,28 @@
         android:textStyle="bold" />
 
 
-    <Button
-        android:id="@+id/start_but"
+<!--    <Button-->
+<!--        android:id="@+id/start_but"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_below="@id/textView"-->
+<!--        android:layout_marginStart="80dp"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:background="@drawable/custon_button"-->
+<!--        android:textColor="#ffff"-->
+<!--        android:textSize="20dp" />-->
+
+    <EditText
+        android:id="@+id/time_txt"
         android:layout_width="250dp"
         android:layout_height="60dp"
+        android:layout_below="@id/textView"
         android:layout_marginStart="80dp"
         android:layout_marginTop="60dp"
-        android:text="Start"
-        android:textSize="20dp"
-        android:textColor="#ffff"
         android:background="@drawable/custon_button"
-        android:layout_below="@id/textView"/>
+        android:textAlignment="center"
+        android:textColor="#ffff"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/end_but"

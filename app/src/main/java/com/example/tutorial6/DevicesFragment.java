@@ -28,6 +28,7 @@ public class DevicesFragment extends ListFragment {
     private BluetoothAdapter bluetoothAdapter;
     private final ArrayList<BluetoothDevice> listItems = new ArrayList<>();
     private ArrayAdapter<BluetoothDevice> listAdapter;
+    private static String DEVICE_ADDRESS = "3C:61:05:14:97:AA";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,15 @@ public class DevicesFragment extends ListFragment {
                 TextView text1 = view.findViewById(R.id.text1);
                 TextView text2 = view.findViewById(R.id.text2);
                 text1.setText(device.getName());
-                System.out.println("the text is" +text1.getText());
                 text2.setText(device.getAddress());
                 return view;
             }
         };
+        Bundle args = new Bundle();
+        args.putString("device", DEVICE_ADDRESS);
+        Intent intent = new Intent(getActivity(), Drawer2Activity.class);
+        intent.putExtra("device", args);
+        startActivity(intent);
     }
 
     @Override
@@ -116,7 +121,8 @@ public class DevicesFragment extends ListFragment {
         BluetoothDevice device = listItems.get(position-1);
         Bundle args = new Bundle();
         args.putString("device", device.getAddress());
-        System.out.println("got here" + device.getAddress());
+
+
         Intent intent = new Intent(getActivity(), Drawer2Activity.class);
         intent.putExtra("device", args);
         startActivity(intent);
