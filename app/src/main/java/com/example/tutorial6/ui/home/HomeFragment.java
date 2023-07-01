@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
          * idan:
          * moved all the functionality from the button outside so it jumps to functionality fragment
          */
-        op.getAllUserReferences("tamar");
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment anotherFragment = new FunctionalityFragment();

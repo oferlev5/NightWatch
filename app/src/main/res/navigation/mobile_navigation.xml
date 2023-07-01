@@ -13,8 +13,8 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.tutorial6.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:name="com.example.tutorial6.ui.history.HistoryFragment"
+        android:label="@string/menu_history"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
