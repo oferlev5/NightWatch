@@ -1,4 +1,4 @@
-package com.example.tutorial6.ui.gallery;
+package com.example.tutorial6.ui.history;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

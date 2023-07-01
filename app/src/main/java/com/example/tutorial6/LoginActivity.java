@@ -85,6 +85,9 @@ public class LoginActivity extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            Bundle args = new Bundle();
+                            String deviceAdd ="3C:61:05:14:97:AA";
+                            args.putString("device", deviceAdd);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
