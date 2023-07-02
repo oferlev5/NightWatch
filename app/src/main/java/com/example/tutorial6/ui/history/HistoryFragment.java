@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tutorial6.R;
 import com.example.tutorial6.databinding.FragmentGalleryBinding;
+import com.example.tutorial6.ui.home.DBOperations;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HistoryFragment extends Fragment {
@@ -30,23 +32,52 @@ public class HistoryFragment extends Fragment {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        RecyclerView recyclerView = binding.recycleview;
 
-        List<Item> items = new ArrayList<Item>();
-        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
-        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
-        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
-        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
-        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
+        DBOperations db = new DBOperations();
+        db.getEvents( new DBOperations.FirestoreCallback() {
+            @Override
+            public void onSuccess(HashMap<String, Object> documents) {
+                ArrayList<Item>  items= new ArrayList<>();
+                // Process the retrieved documents
+                for (HashMap.Entry<String, Object> entry : documents.entrySet()) {
+                    String documentId = entry.getKey();
+                    HashMap<String, String> documentData = (HashMap<String, String>) entry.getValue();
+                    Item item = new Item("Start Time: " + documentData.get("startTime"), "End Time: " +documentData.get("stopTime"),"Motion: "+documentData.get("startTime"),R.drawable.bab3n);
+                    items.add(item);
+                }
+                loadHistory(items);
+
+                // Call another function or return the HashMap as needed
+
+            }
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MyAdapter(getActivity(),items));
-
-
+        });
 //        final TextView textView = binding.textGallery;
 //        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+    }
+
+    public void loadHistory( HashMap<String, Object> documentData) {
+//        RecyclerView recyclerView = binding.recycleview;
+        List<Item> items = new ArrayList<Item>();
+//        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
+//        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
+//        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
+//        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
+//        items.add(new Item("ofer","olev@campus", R.drawable.bab3n));
+
+
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.setAdapter(new MyAdapter(getActivity(),items));
+
+    }
+    public void loadHistory(ArrayList<Item> items) {
+        RecyclerView recyclerView = binding.recycleview;
+        System.out.println("started loading history");
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(new MyAdapter(getActivity(),items));
+
     }
 
     @Override

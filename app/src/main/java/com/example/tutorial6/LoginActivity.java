@@ -11,8 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tutorial6.ui.history.Item;
 import com.example.tutorial6.ui.home.DBOperations;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,6 +30,28 @@ public class LoginActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.login_password);
         Button login = findViewById(R.id.login_but);
         TextView signupRedirect = findViewById(R.id.signup_redirected);
+//        DBOperations db = new DBOperations();
+//        db.getEvents( new DBOperations.FirestoreCallback() {
+//            @Override
+//            public void onSuccess(HashMap<String, Object> documents) {
+//                ArrayList<Item>  items= new ArrayList<>();
+//                // Process the retrieved documents
+//                for (HashMap.Entry<String, Object> entry : documents.entrySet()) {
+//                    String documentId = entry.getKey();
+//                    HashMap<String, String> documentData = (HashMap<String, String>) entry.getValue();
+//                    Item item = new Item(documentData.get("startTime"), documentData.get("stopTime"),documentData.get("startTime"),R.drawable.bab3n);
+//                    items.add(item);
+//                }
+//                loadHistory(items);
+//
+//                // Call another function or return the HashMap as needed
+//
+//            }
+//
+//
+//        });
+
+
 
 
         signupRedirect.setOnClickListener(new View.OnClickListener() {
@@ -119,4 +143,12 @@ public class LoginActivity extends AppCompatActivity {
 
         });
     }
+
+//    public void loadHistory(ArrayList<Item> items) {
+//        System.out.println("started loading history");
+//        for (String key : documentData.keySet()) {
+//            String value =  (String) documentData.get(key);
+//            System.out.println("Key: " + key + ", Value: " + value);
+//        }
+//    }
 }

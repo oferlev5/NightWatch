@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/purple_border"
-    android:layout_height="wrap_content"
+    android:background="@drawable/layer"
+    android:layout_height="100dp"
+    android:layout_marginEnd="2dp"
+    android:layout_marginStart="2dp"
     android:layout_marginTop="10dp"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -16,7 +18,8 @@
         android:layout_marginLeft="10dp" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/startTime"
+        android:paddingTop="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -24,24 +27,29 @@
         android:textColor="@color/black"
         android:textSize="20dp"
         tools:text="Name" />
-
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/stopTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/startTime"
         android:layout_marginLeft="30dp"
-
+        android:textSize="20dp"
         android:layout_toEndOf="@id/imageView"
         android:textColor="@color/black"
         tools:text="email@email.com" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/numMoving"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/imageView"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stopTime"
+        android:layout_marginLeft="30dp"
+        android:textSize="20dp"
+        android:layout_toEndOf="@id/imageView"
+        android:textColor="@color/black"
+        tools:text="email@email.com" />
+
+
 
 
 

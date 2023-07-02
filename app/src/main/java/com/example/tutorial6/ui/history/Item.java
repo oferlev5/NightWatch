@@ -1,32 +1,41 @@
 package com.example.tutorial6.ui.history;
 
 public class Item {
-    String name;
-    String email;
+    String startTime;
+    String stopTime;
+    String numMoving;
     int image;
 
-    public Item(String name, String email, int image) {
-        this.name = name;
-        this.email = email;
+    public Item(String startTime, String stopTime, String numMoving, int image) {
+        this.startTime = startTime;
+        this.stopTime = stopTime;
+        this.numMoving = numMoving;
         this.image = image;
     }
 
-    public String getName() {
-        return name;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStartTime(String name) {
+        this.startTime = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getStopTime() {
+        return stopTime;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setStopTime(String stopTime) {
+        this.stopTime = stopTime;
     }
 
+    public String getNumMoving() {
+        return numMoving;
+    }
+
+    public void setNumMoving(String numMoving) {
+        this.numMoving = numMoving;
+    }
     public int getImage() {
         return image;
     }
@@ -34,4 +43,6 @@ public class Item {
     public void setImage(int image) {
         this.image = image;
     }
+
+
 }

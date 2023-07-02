@@ -47,6 +47,25 @@ public class DBOperations {
                 });
 
     }
+
+    public void insertEvent(HashMap<String,String> dataToEnter) {
+        db.collection("event ")
+                .add(dataToEnter)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        System.out.println("documentReference = " + documentReference);
+//                        Log.d("DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("e = " + e);
+                    }
+                });
+
+    }
     
     public void readData() {
         db.collection("users")
@@ -88,6 +107,38 @@ public class DBOperations {
                     }
                 });
     }
+
+
+    public void getEvents( final FirestoreCallback callback) {
+        db.collection("events ")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            HashMap<String, Object> documents = new HashMap<>();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                String documentId = document.getId();
+                                Map<String, Object> documentData = document.getData();
+
+                                System.out.println("Document ID: " + documentId);
+                                System.out.println("Document Data: " + documentData);
+
+                                documents.put(documentId, documentData);
+                            }
+                            System.out.println(task.getResult().size());
+                            System.out.println("documentsev = " + documents);
+                            callback.onSuccess(documents);
+                        } else {
+                            Exception exception = task.getException();
+                            System.out.println("failed");
+
+                        }
+                    }
+                });
+    }
+
 
     public interface FirestoreCallback {
         void onSuccess(HashMap<String, Object> documents);
