@@ -1,5 +1,6 @@
 package com.example.tutorial6;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -8,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Spannable;
@@ -30,22 +32,33 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tutorial6.ui.home.FunctionalityFragment;
 import com.github.mikephil.charting.data.Entry;
+import com.google.type.DateTime;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.units.qual.A;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
     public static final int ARRAY_LEN = 50;
+    public static final int LIGHT_ARRAY_LEN = 10;
     public static final double MOVING_THRESHOLD = 13;
     public static final double LIGHT_THRESHOLD = 0.00;
     public static final int SOUND_THRESHOLD = 770;
 
     private Boolean firstFlag = Boolean.TRUE;
     float firstTime;
+    public LocalDateTime start = LocalDateTime.now();
+
+    private int numMoving = 0;
+
+    private Boolean isMoving = Boolean.FALSE;
 
     private enum Connected { False, Pending, True }
 
@@ -98,11 +111,17 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     @Override
     public void onStart() {
         super.onStart();
-        if(service != null)
-            service.attach(this);
-        else
-            getActivity().startService(new Intent(getActivity(), SerialService.class)); // prevents service destroy on unbind from recreated activity caused by orientation change
-    }
+        if(service != null) {
+            if (service.used == Boolean.TRUE) {
+                getActivity().startService(new Intent(getActivity(), SerialService.class)); // prevents service destroy on unbind from recreated activity caused by orientation change
+            } else {
+                service.attach(this);
+            }
+        }
+        else{
+                getActivity().startService(new Intent(getActivity(), SerialService.class)); // prevents service destroy on unbind from recreated activity caused by orientation change
+            }
+        }
 
     @Override
     public void onStop() {
@@ -174,9 +193,36 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         this.timeText = view.findViewById(R.id.time_txt);
 
         stopButton.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+
                 FragmentManager fragmentManager = getFragmentManager();
+
+
+                TerminalFragment thisFrag =(TerminalFragment) fragmentManager.findFragmentById(R.id.nav_host_fragment_content_drawer);
+
+                thisFrag.service.used = Boolean.TRUE;
+                thisFrag.disconnect();
+
+
+                /** save to DB */
+                thisFrag.firstFlag = Boolean.TRUE;
+                System.out.println("thisFrag.start = " + thisFrag.start);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                String startTime = dtf.format(thisFrag.start);
+                String stopTime = dtf.format(LocalDateTime.now());
+                String moving = String.valueOf(thisFrag.numMoving);
+                HashMap<String, String> toSave = new HashMap<>();
+                toSave.put("startTime",startTime);
+                toSave.put("stopTime",stopTime);
+                toSave.put("numMoving", moving);
+
+                System.out.println("toSave = " + toSave.get("startTime"));
+
+//                HERE I NEED TO SAVE
+
+                /** change the fragents displayed*/
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 Fragment anotherFragment = new FunctionalityFragment();
                 fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment);
@@ -288,7 +334,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             this.firstTime = parsedData.get(3);
             this.firstFlag = Boolean.FALSE;
         }
-        if (parsedData.size() < 6){
+        if (parsedData.size() < 7){
             return;
         }
         updateTime(parsedData);
@@ -297,6 +343,12 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         /** check if the params status changed */
         Boolean isMoving = checkIfMoving();
+        if (isMoving != this.isMoving){
+            if (isMoving == Boolean.TRUE){
+                this.numMoving +=1;
+            }
+            this.isMoving = isMoving;
+        }
         Boolean isLight = checkIfLight();
         Boolean isNoise = checkIfSound();
 
@@ -325,18 +377,20 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     private Boolean checkIfMoving() {
         float accelMean = sumFloat(this.accelerationArr)/this.accelerationArr.size();
-        if (accelMean>MOVING_THRESHOLD) return Boolean.TRUE;
+        if (accelMean>MOVING_THRESHOLD){
+            return Boolean.TRUE;
+        }
         return Boolean.FALSE;
     }
     private Boolean checkIfLight() {
-        float accelMean = sumFloat(this.lightArr)/this.lightArr.size();
-        if (accelMean>LIGHT_THRESHOLD) return Boolean.TRUE;
+        float lightMean = sumFloat(this.lightArr)/this.lightArr.size();
+        if (lightMean>LIGHT_THRESHOLD) return Boolean.TRUE;
         return Boolean.FALSE;
     }
 
     private Boolean checkIfSound() {
-        float accelMean = sumFloat(this.soundArr)/this.soundArr.size();
-        if (accelMean>SOUND_THRESHOLD) return Boolean.TRUE;
+        float soundMean = sumFloat(this.soundArr)/this.soundArr.size();
+        if (soundMean>SOUND_THRESHOLD) return Boolean.TRUE;
         return Boolean.FALSE;
     }
 
@@ -351,7 +405,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             delFirstAddLast(this.tempArr, parsedData.get(4));
         }
         else this.tempArr.add(parsedData.get(4));
-        if (this.lightArr.size() >= ARRAY_LEN){
+        if (this.lightArr.size() >= LIGHT_ARRAY_LEN){
             delFirstAddLast(this.lightArr, parsedData.get(5));
         }
         else this.lightArr.add(parsedData.get(5));
