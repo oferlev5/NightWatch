@@ -1,0 +1,21 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- First item - Existing background drawable -->
+    <item android:drawable="@drawable/purple_border_new" />
+
+    <!-- Second item - Gradient color background -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FF9D45AC"
+            android:endColor="#FFFF"
+            android:type="linear"
+            />
+            <corners
+                android:radius="20dp"/>
+            <stroke
+                android:color="@color/colorPrimary"
+                android:width="2dp"/>
+
+        </shape>
+    </item>
+</layer-list>

@@ -47,6 +47,25 @@ public class DBOperations {
                 });
 
     }
+
+    public void insertEvent(HashMap<String,String> dataToEnter) {
+        db.collection("event ")
+                .add(dataToEnter)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        System.out.println("documentReference = " + documentReference);
+//                        Log.d("DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("e = " + e);
+                    }
+                });
+
+    }
     
     public void readData() {
         db.collection("users")

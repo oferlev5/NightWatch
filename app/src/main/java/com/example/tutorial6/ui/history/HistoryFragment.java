@@ -42,7 +42,7 @@ public class HistoryFragment extends Fragment {
                 for (HashMap.Entry<String, Object> entry : documents.entrySet()) {
                     String documentId = entry.getKey();
                     HashMap<String, String> documentData = (HashMap<String, String>) entry.getValue();
-                    Item item = new Item(documentData.get("startTime"), documentData.get("stopTime"),documentData.get("startTime"),R.drawable.bab3n);
+                    Item item = new Item("Start Time: " + documentData.get("startTime"), "End Time: " +documentData.get("stopTime"),"Motion: "+documentData.get("startTime"),R.drawable.bab3n);
                     items.add(item);
                 }
                 loadHistory(items);
