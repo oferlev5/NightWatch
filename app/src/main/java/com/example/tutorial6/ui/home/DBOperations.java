@@ -51,6 +51,7 @@ public class DBOperations {
 
     public void insertEvent(HashMap<String,String> dataToEnter) {
         dataToEnter.put("username", LoginActivity.username);
+        System.out.println(dataToEnter);
         db.collection("events ")
                 .add(dataToEnter)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

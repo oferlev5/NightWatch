@@ -52,7 +52,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     public static final int LIGHT_ARRAY_LEN = 10;
     public static final double MOVING_THRESHOLD = 13;
     public static final double LIGHT_THRESHOLD = 0.00;
-    public static final int SOUND_THRESHOLD = 770;
+    public static final int SOUND_THRESHOLD = 810;
 
     private Boolean firstFlag = Boolean.TRUE;
     float firstTime;
