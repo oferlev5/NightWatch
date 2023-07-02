@@ -1,8 +1,20 @@
 package com.example.tutorial6.ui.home;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+
+
+import android.content.Context;
+import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -59,12 +71,33 @@ public class FunctionalityFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentFunctionalityBinding.inflate(inflater, container, false);
-        System.out.println("i am in activityy" + getActivity());
-        View root = binding.getRoot();
-        startBtn = binding.startBut;
+                Bundle savedInstanceState) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel("My Notification","My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+                manager.createNotificationChannel(channel);
+            }
+
+            // Inflate the layout for this fragment
+            binding = FragmentFunctionalityBinding.inflate(inflater, container, false);
+            System.out.println("i am in activityy" + getActivity());
+            View root = binding.getRoot();
+            startBtn = binding.startBut;
+
+            //notificatuin
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"My Notification");
+            builder.setContentTitle("Alert");
+            builder.setContentText("your baby might be awake");
+            builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+            builder.setAutoCancel(true);
+
+            //Add sound to notification
+            Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            builder.setSound(soundUri);
+
+            NotificationManagerCompat managerCompact = NotificationManagerCompat.from(getActivity());
+            managerCompact.notify(1,builder.build());
 
 
 //        DBOperations db = new DBOperations();
