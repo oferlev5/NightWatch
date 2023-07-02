@@ -16,7 +16,7 @@
         android:layout_marginLeft="10dp" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/startTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -26,10 +26,20 @@
         tools:text="Name" />
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/stopTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/startTime"
+        android:layout_marginLeft="30dp"
+
+        android:layout_toEndOf="@id/imageView"
+        android:textColor="@color/black"
+        tools:text="email@email.com" />
+    <TextView
+        android:id="@+id/numMoving"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stopTime"
         android:layout_marginLeft="30dp"
 
         android:layout_toEndOf="@id/imageView"

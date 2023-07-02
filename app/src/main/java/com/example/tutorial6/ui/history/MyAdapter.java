@@ -28,8 +28,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // need to do for all the fields i want
-        holder.nameView.setText(items.get(position).getName());
-        holder.emailView.setText(items.get(position).getEmail());
+        holder.startTimeView.setText(items.get(position).getStartTime());
+        holder.stopTimeView.setText(items.get(position).getStopTime());
+        holder.numMovingView.setText(items.get(position).getNumMoving());
         holder.imageView.setImageResource(items.get(position).getImage());
 
     }

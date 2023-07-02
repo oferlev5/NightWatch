@@ -89,6 +89,38 @@ public class DBOperations {
                 });
     }
 
+
+    public void getEvents( final FirestoreCallback callback) {
+        db.collection("events ")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            HashMap<String, Object> documents = new HashMap<>();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                String documentId = document.getId();
+                                Map<String, Object> documentData = document.getData();
+
+                                System.out.println("Document ID: " + documentId);
+                                System.out.println("Document Data: " + documentData);
+
+                                documents.put(documentId, documentData);
+                            }
+                            System.out.println(task.getResult().size());
+                            System.out.println("documentsev = " + documents);
+                            callback.onSuccess(documents);
+                        } else {
+                            Exception exception = task.getException();
+                            System.out.println("failed");
+
+                        }
+                    }
+                });
+    }
+
+
     public interface FirestoreCallback {
         void onSuccess(HashMap<String, Object> documents);
 
