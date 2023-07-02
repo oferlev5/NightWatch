@@ -369,10 +369,22 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     private void updateTime(ArrayList<Float> parsedData) {
         float time = parsedData.get(3) - this.firstTime;
-        int timeInt = (int) time;
-        String timeString = String.valueOf(timeInt);
-        this.timeText.setText("time: " + timeString);
-
+        int timeSec = (int) time;
+        if (timeSec < 60) {
+            String timeString = String.valueOf(timeSec);
+            this.timeText.setText(timeString + " seconds");
+        }else{
+            int timeMin= timeSec/60;
+            if (timeMin < 60){
+                String timeString = String.valueOf(timeMin);
+                this.timeText.setText(timeString + " minutes");
+            }
+            else {
+                int timeHour= timeMin/60;
+                String timeString = String.valueOf(timeHour);
+                this.timeText.setText(timeString + " hours");
+            }
+        }
     }
 
     private Boolean checkIfMoving() {
