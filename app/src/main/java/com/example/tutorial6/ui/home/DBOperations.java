@@ -50,9 +50,10 @@ public class DBOperations {
     }
 
     public void insertEvent(HashMap<String,String> dataToEnter) {
-        dataToEnter.put("username", LoginActivity.username);
-        System.out.println(dataToEnter);
-        db.collection("events ")
+        System.out.println(LoginActivity.userID + "sssss");
+        dataToEnter.put("email", LoginActivity.userID);
+        System.out.println();
+        db.collection("event ")
                 .add(dataToEnter)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -113,7 +114,7 @@ public class DBOperations {
 
 
     public void getEvents( final FirestoreCallback callback) {
-        db.collection("events ")
+        db.collection("event ").whereEqualTo("email", LoginActivity.userID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

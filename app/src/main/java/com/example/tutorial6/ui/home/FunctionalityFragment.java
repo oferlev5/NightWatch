@@ -19,6 +19,8 @@ import com.example.tutorial6.TerminalFragment;
 import com.example.tutorial6.databinding.FragmentFunctionalityBinding;
 import com.example.tutorial6.databinding.FragmentHomeBinding;
 
+import java.util.HashMap;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FunctionalityFragment#newInstance} factory method to
@@ -63,6 +65,14 @@ public class FunctionalityFragment extends Fragment {
         System.out.println("i am in activityy" + getActivity());
         View root = binding.getRoot();
         startBtn = binding.startBut;
+
+
+//        DBOperations db = new DBOperations();
+//        HashMap<String, String> toSave = new HashMap<>();
+//        toSave.put("startTime","2");
+//        toSave.put("stopTime","3");
+//        toSave.put("numMoving", "4");
+//        db.insertEvent(toSave);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override

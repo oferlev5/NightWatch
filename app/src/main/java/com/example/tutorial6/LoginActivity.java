@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     private  static int DELAY_TIME=1000;
-    public static String username;
+    public static String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
 
-                    username = (String) data.get("username");
+                    for (String key:data.keySet()) {
+                        HashMap<String,String> res = (HashMap<String,String>)data.get(key);
+                        userID = res.get("email");
+                        System.out.println("userID = " + userID);;
+
+                    }
+
                     Toast.makeText(LoginActivity.this, "Logged in successfully ", Toast.LENGTH_SHORT).show();
                     new Handler().postDelayed(new Runnable() {
                         @Override
