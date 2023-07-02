@@ -2,6 +2,7 @@ package com.example.tutorial6.ui.home;
 
 
 import com.example.tutorial6.CredentialCallback;
+import com.example.tutorial6.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +50,8 @@ public class DBOperations {
     }
 
     public void insertEvent(HashMap<String,String> dataToEnter) {
-        db.collection("event ")
+        dataToEnter.put("username", LoginActivity.username);
+        db.collection("events ")
                 .add(dataToEnter)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

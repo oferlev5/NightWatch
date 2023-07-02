@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     private  static int DELAY_TIME=1000;
+    public static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "wrong email or password", Toast.LENGTH_SHORT).show();
                 }
                 else{
+
+                    username = (String) data.get("username");
                     Toast.makeText(LoginActivity.this, "Logged in successfully ", Toast.LENGTH_SHORT).show();
                     new Handler().postDelayed(new Runnable() {
                         @Override

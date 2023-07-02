@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -30,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.tutorial6.ui.home.DBOperations;
 import com.example.tutorial6.ui.home.FunctionalityFragment;
 import com.github.mikephil.charting.data.Entry;
 import com.google.type.DateTime;
@@ -55,6 +57,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private Boolean firstFlag = Boolean.TRUE;
     float firstTime;
     public LocalDateTime start = LocalDateTime.now();
+    private  static int DELAY_TIME=3000;
+
+
 
     private int numMoving = 0;
 
@@ -207,6 +212,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
 
                 /** save to DB */
+                DBOperations db = new DBOperations();
                 thisFrag.firstFlag = Boolean.TRUE;
                 System.out.println("thisFrag.start = " + thisFrag.start);
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -217,18 +223,29 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 toSave.put("startTime",startTime);
                 toSave.put("stopTime",stopTime);
                 toSave.put("numMoving", moving);
+                db.insertEvent(toSave);
 
                 System.out.println("toSave = " + toSave.get("startTime"));
 
 //                HERE I NEED TO SAVE
 
                 /** change the fragents displayed*/
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment anotherFragment = new FunctionalityFragment();
-                fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment);
+                Toast.makeText(getActivity(), "Saving your Data... ", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        Fragment anotherFragment = new FunctionalityFragment();
+                        fragmentTransaction.replace(R.id.nav_host_fragment_content_drawer,anotherFragment);
 //                fragmentTransaction.add(R.id.nav_host_fragment_content_main2, anotherFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+
+                    }
+                },DELAY_TIME);
+
+
             }
         });
 
@@ -372,17 +389,17 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         int timeSec = (int) time;
         if (timeSec < 60) {
             String timeString = String.valueOf(timeSec);
-            this.timeText.setText(timeString + " seconds");
+            this.timeText.setText(timeString + " SECONDS");
         }else{
             int timeMin= timeSec/60;
             if (timeMin < 60){
                 String timeString = String.valueOf(timeMin);
-                this.timeText.setText(timeString + " minutes");
+                this.timeText.setText(timeString + " MINUTES");
             }
             else {
                 int timeHour= timeMin/60;
                 String timeString = String.valueOf(timeHour);
-                this.timeText.setText(timeString + " hours");
+                this.timeText.setText(timeString + " HOURS");
             }
         }
     }
