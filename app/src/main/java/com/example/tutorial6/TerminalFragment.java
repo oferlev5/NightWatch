@@ -3,12 +3,16 @@ package com.example.tutorial6;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +31,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -64,6 +70,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private int numMoving = 0;
 
     private Boolean isMoving = Boolean.FALSE;
+    private Boolean isNoise = Boolean.FALSE;
 
     private enum Connected { False, Pending, True }
 
@@ -172,12 +179,36 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         service = null;
     }
 
+    public void sendNotification(String msg,String title) {
+        //notificatuin
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"My Notification");
+        builder.setContentTitle(title);
+        builder.setContentText(msg);
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setAutoCancel(true);
+
+        //Add sound to notification
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(soundUri);
+
+        NotificationManagerCompat managerCompact = NotificationManagerCompat.from(getActivity());
+        managerCompact.notify(1,builder.build());
+
+
+    }
+
     /*
      * UI
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_terminal, container, false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification","My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
 
         Button stopButton = view.findViewById(R.id.end_but);
 
@@ -215,7 +246,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 DBOperations db = new DBOperations();
                 thisFrag.firstFlag = Boolean.TRUE;
                 System.out.println("thisFrag.start = " + thisFrag.start);
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                 String startTime = dtf.format(thisFrag.start);
                 String stopTime = dtf.format(LocalDateTime.now());
                 String moving = String.valueOf(thisFrag.numMoving);
@@ -355,32 +386,37 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             return;
         }
         updateTime(parsedData);
-
         saveDataToArrays(parsedData);
-
         /** check if the params status changed */
         Boolean isMoving = checkIfMoving();
         if (isMoving != this.isMoving){
             if (isMoving == Boolean.TRUE){
                 this.numMoving +=1;
+                String msg = "your baby might be moving";
+                String title = "Alert";
+                sendNotification(msg,title);
             }
             this.isMoving = isMoving;
         }
         Boolean isLight = checkIfLight();
         Boolean isNoise = checkIfSound();
-
+        if (isNoise != this.isNoise){
+            if (isNoise == Boolean.TRUE){
+//                this.numMoving +=1;
+                String msg = "your baby might be crying";
+                String title = "Alert";
+                sendNotification(msg,title);
+            }
+            this.isNoise = isNoise;
+        }
         float temp = sumFloat(this.tempArr)/this.tempArr.size();
-
         /** updating displayed text according to data */
         if (isMoving) this.movementText.setText("MOVING!!!");
         else this.movementText.setText("");
-
         if (isLight) this.lightText.setText("LIGHT ON");
         else this.lightText.setText("");
-
         if (isNoise) this.soundText.setText("CRYING");
         else this.soundText.setText("");
-
         this.tempText.setText(String.valueOf((int) temp));
     }
 
